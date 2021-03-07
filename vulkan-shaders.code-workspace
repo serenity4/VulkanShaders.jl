@@ -1,0 +1,17 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../Vulkan/generated",
+            "name": "Vulkan (generated)"
+        },
+        {
+            "path": "../Vulkan",
+            "name": "Vulkan"
+        }
+    ],
+
+    "settings": {}
+}
