@@ -70,6 +70,15 @@ function file_ext(::Type{<:Union{FormatGLSL,FormatHLSL}}, stage::ShaderStageFlag
         &SHADER_STAGE_TESSELLATION_CONTROL_BIT => "tesc"
         &SHADER_STAGE_TESSELLATION_EVALUATION_BIT => "tese"
         &SHADER_STAGE_GEOMETRY_BIT => "geom"
+        &SHADER_STAGE_COMPUTE_BIT => "comp"
+        &SHADER_STAGE_RAYGEN_BIT_KHR => "rgen"
+        &SHADER_STAGE_INTERSECTION_BIT_KHR => "rint"
+        &SHADER_STAGE_ANY_HIT_BIT_KHR => "rahit"
+        &SHADER_STAGE_CLOSEST_HIT_BIT_KHR => "rchit"
+        &SHADER_STAGE_MISS_BIT_KHR => "rmiss"
+        &SHADER_STAGE_CALLABLE_BIT_KHR => "rcall"
+        &SHADER_STAGE_MESH_BIT_NV => "mesh"
+        &SHADER_STAGE_TASK_BIT_NV => "task"
         _ => error("Unknown stage $stage")
     end
 end
@@ -98,6 +107,15 @@ function shader_stage(file::AbstractString, ::Union{FormatHLSL,FormatGLSL})
         ".tesc" => SHADER_STAGE_TESSELLATION_CONTROL_BIT
         ".tese" => SHADER_STAGE_TESSELLATION_EVALUATION_BIT
         ".geom" => SHADER_STAGE_GEOMETRY_BIT
+        ".comp" => SHADER_STAGE_COMPUTE_BIT
+        ".rgen" => SHADER_STAGE_RAYGEN_BIT_KHR
+        ".rint" => SHADER_STAGE_INTERSECTION_BIT_KHR
+        ".rahit" => SHADER_STAGE_ANY_HIT_BIT_KHR
+        ".rchit" => SHADER_STAGE_CLOSEST_HIT_BIT_KHR
+        ".rmiss" => SHADER_STAGE_MISS_BIT_KHR
+        ".rcall" => SHADER_STAGE_CALLABLE_BIT_KHR
+        ".mesh" => SHADER_STAGE_MESH_BIT_NV
+        ".task" => SHADER_STAGE_TASK_BIT_NV
         _ => error("Unknown file extension $file_ext")
     end
 end
