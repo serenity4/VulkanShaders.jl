@@ -4,6 +4,7 @@ using Vulkan
 using SPIRV
 using MLStyle
 using Parameters
+using DataStructures
 
 import glslang_jll
 import Vulkan: ShaderModule, DescriptorSetLayout, PipelineShaderStageCreateInfo
@@ -29,8 +30,11 @@ export
         Shader,
         compile,
         reflect,
-        descriptor_sets,
-        bindings,
-        descriptor_set_layouts
+
+        # descriptors
+        DescriptorBinding,
+        get_descriptor_sets,
+        get_bindings,
+        create_descriptor_set_layouts
 
 end
