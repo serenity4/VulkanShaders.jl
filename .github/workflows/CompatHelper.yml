@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: julia-actions/setup-julia@latest
         with:
-          version: julia-1.6.0-rc2
+          version: julia-1.6.0
       - name: Pkg.add("CompatHelper")
         run: julia -e 'using Pkg; Pkg.add("CompatHelper")'
       - name: CompatHelper.main()
