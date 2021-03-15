@@ -15,7 +15,7 @@ function create_descriptor_set_layouts(shaders::AbstractVector{Shader})::Vector{
     sets = DefaultOrderedDict{Int,Vector{DescriptorSetLayoutBinding}}(() -> DescriptorSetLayoutBinding[])
     for shader ∈ shaders
         for resource_binding ∈ shader.bindings
-            push!(sets[resource_binding.set], DescriptorSetLayoutBinding(resource_binding.binding, resource_binding.descriptor_type, shader.stage))
+            push!(sets[resource_binding.set], DescriptorSetLayoutBinding(resource_binding.binding, resource_binding.descriptor_type, shader.stage; descriptor_count=1))
         end
     end
     if !all(keys(sets) .== 0:(length(sets) - 1))
