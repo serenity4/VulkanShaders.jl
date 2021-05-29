@@ -1,7 +1,7 @@
 @with_kw struct Shader
     mod::ShaderModule
     stage::ShaderStageFlag
-    bindings::AbstractVector{<:DescriptorBinding} = DescriptorBinding[]
+    bindings::Vector{DescriptorBinding} = DescriptorBinding[]
     entry_point::Symbol = :main
 end
 
@@ -12,10 +12,10 @@ has_bindings(shader::Shader) = !isempty(shader.bindings)
 PipelineShaderStageCreateInfo(shader::Shader) = PipelineShaderStageCreateInfo(shader.stage, shader.mod, string(shader.entry_point))
 
 function create_descriptor_set_layouts(shaders::AbstractVector{Shader})::Vector{DescriptorSetLayout}
-    sets = DefaultOrderedDict{Int,Vector{DescriptorSetLayoutBinding}}(() -> DescriptorSetLayoutBinding[])
+    sets = DefaultOrderedDict{Int,Vector{_DescriptorSetLayoutBinding}}(() -> _DescriptorSetLayoutBinding[])
     for shader ∈ shaders
         for resource_binding ∈ shader.bindings
-            push!(sets[resource_binding.set], DescriptorSetLayoutBinding(resource_binding.binding, resource_binding.descriptor_type, shader.stage; descriptor_count=1))
+            push!(sets[resource_binding.set], _DescriptorSetLayoutBinding(resource_binding.binding, resource_binding.descriptor_type, shader.stage; descriptor_count=1))
         end
     end
     if !all(keys(sets) .== 0:(length(sets) - 1))

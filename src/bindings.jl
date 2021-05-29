@@ -1,5 +1,5 @@
 struct DescriptorBinding
-    descriptor_type::VkDescriptorType
+    descriptor_type::DescriptorType
     set::Int
     binding::Int
 end
