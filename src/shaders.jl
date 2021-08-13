@@ -1,11 +1,11 @@
 @with_kw struct Shader
-    mod::ShaderModule
+    code::String
     stage::ShaderStageFlag
     bindings::Vector{DescriptorBinding} = DescriptorBinding[]
     entry_point::Symbol = :main
 end
 
-Shader(device, shader::ShaderFile, bindings; entry_point=:main) = Shader(mod=ShaderModule(device, shader), stage=shader.stage; bindings, entry_point)
+Shader(shader::ShaderFile, bindings; entry_point=:main) = Shader(code=spirv_code(shader), stage=shader.stage; bindings, entry_point)
 
 has_bindings(shader::Shader) = !isempty(shader.bindings)
 

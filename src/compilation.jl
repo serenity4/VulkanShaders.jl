@@ -4,16 +4,14 @@ end
 
 Base.showerror(io::IO, err::ShaderCompilationError) = print(io, "ShaderCompilationError:\n\n$(err.msg)")
 
-function ShaderModule(device, shader::ShaderFile{FormatSPIRV})
-    filesize = stat(shader.file).size
-    code = Vector{UInt8}(undef, cld(filesize, 4))
-    open(shader.file) do io
-        readbytes!(io, code, filesize)
-    end
-    ShaderModule(device, filesize, reinterpret(UInt32, code))
+# WARNING: this is type piracy.
+function ShaderModule(device::Device, code::Vector{UInt8})
+    size = cld(length(code), 4)
+    ShaderModule(device, size, reinterpret(UInt32, resize!(copy(code), size * 4)))
 end
 
-ShaderModule(device, shader::ShaderFile{<:TextFormat}) = ShaderModule(device, compile(shader))
+spirv_code(shader::ShaderFile{<:FormatSPIRV}) = read(shader.file)
+spirv_code(shader::ShaderFile) = spirv_code(compile(shader))
 
 """
     compile(shader)
@@ -39,4 +37,4 @@ function compile(shader::ShaderFile{FormatGLSL}; extra_flags=[], validate_spirv=
     ShaderFile(dst, FormatSPIRV(), shader.stage)
 end
 
-compile(shader::ShaderFile{FormatHLSL})::ShaderFile{FormatSPIRV} = compile(convert(ShaderFile{FormatGLSL}, shader), extra_flags=["-D"])
+compile(shader::ShaderFile{FormatHLSL}) = compile(convert(ShaderFile{FormatGLSL}, shader), extra_flags=["-D"])
