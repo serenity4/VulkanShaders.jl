@@ -140,8 +140,8 @@ function shader_format(file::AbstractString)
     _, file_ext = splitext(file)
     @match file_ext begin
         ".spv" => FormatSPIRV()
-        ".FormatGLSL" => FormatGLSL()
-        ".FormatHLSL" => FormatHLSL()
+        ".glsl" => FormatGLSL()
+        ".hlsl" => FormatHLSL()
         _ => error("Unknown file extension $file_ext")
     end
 end
